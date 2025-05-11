@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UploadController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [UploadController::class, 'index'])->name('upload');
+
+
+route::prefix('uploads')->group(function() {
+    Route::get('/list', [UploadController::class, 'list'])->name('upload.list');
+    Route::post('/', [UploadController::class, 'store'])->name('upload.store');
 });
+
+route::prefix('products')->group(function(){
+    Route::get('/', [ProductController::class, 'index'])->name('product');
+    Route::get('/list', [ProductController::class, 'list'])->name('product.list');
+});
+
+
+
